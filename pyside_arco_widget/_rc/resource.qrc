@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/pysidearcowidget">
+
+        <file>image/icon/Plus.svg</file>
+        <file>image/icon/Delete.svg</file>
+
+    </qresource>
+</RCC>

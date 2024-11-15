@@ -15,6 +15,29 @@ style_base = """
         font-size: 14px;
         outline: none;
     }
+    Button[IconOnly=true]{
+        width: 32px;
+        padding: 0;
+    }
+    Button[Shape=circle]{
+        width: 32px;
+        padding: 0;
+        text-align: center;
+        border-radius: 16px;
+    }
+    Button[Shape=round]{
+        border-radius: 16px;
+    }
+    Button[Size=mini]{
+        font-size: 12px;
+        height: 24px;
+    }
+    Button[Size=small]{
+        height: 28px;
+    }
+    Button[Size=large]{
+        height: 36px;
+    }
 """
 
 style = {
@@ -89,12 +112,28 @@ style = {
     """
 }
 
+icon_size = {
+    'mini': 12,
+    'small': 14,
+    'default': 14,
+    'large': 14
+}
+
 
 class Button(QPushButton):
-    def __init__(self, text: str = None, btype: str = 'primary', long: bool = False, parent=None):
+    def __init__(self, text: str = None, btype: str = 'primary', icon: QIcon = None, shape:str='square', size: str = 'default', long: bool = False,
+                  parent=None):
         super().__init__(parent)
-        self.setText(text)
         self.setStyleSheet(style_base + style[btype])
+        self.setProperty('Shape', shape)
+        self.setProperty('Size', size)
+        if text:
+            self.setText(f"{' ' if icon else ''}{text}")
+        else:
+            self.setProperty('IconOnly', True)
         if not long:
             self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         setFont(self)
+        if icon:
+            self.setIcon(icon)
+            self.setIconSize(QSize(icon_size[size], icon_size[size]))
