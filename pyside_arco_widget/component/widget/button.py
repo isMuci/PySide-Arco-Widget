@@ -57,6 +57,9 @@ style = {
             color: #ffffff;
             border: 1px solid transparent;
         }
+        Button[Disabled=true]{
+            background-color: rgb(148,191,255);
+        }
         Button:hover{
             background-color: rgb(64,128,255);
         }
@@ -65,6 +68,9 @@ style = {
         }
         Button[Status=warning]{
             background-color: rgb(255,150,38);
+        }
+        Button[Status=warning][Disabled=true]{
+            background-color: rgb(255,207,139);
         }
         Button[Status=warning]:hover{
             background-color: rgb(255,154,46);
@@ -75,6 +81,9 @@ style = {
         Button[Status=danger]{
             background-color: rgb(245,63,63);
         }
+        Button[Status=danger][Disabled=true]{
+            background-color: rgb(251,172,163);
+        }
         Button[Status=danger]:hover{
             background-color: rgb(247,101,96);
         }
@@ -84,6 +93,9 @@ style = {
         Button[Status=success]{
             background-color: rgb(0,180,42);
         }
+        Button[Status=success][Disabled=true]{
+            background-color: rgb(123,225,136);
+        }
         Button[Status=success]:hover{
             background-color: rgb(35,195,67);
         }
@@ -92,9 +104,22 @@ style = {
         }
     """,
     'secondary': """
+        Button[Disabled=true]{
+            background-color: rgb(247,248,250);
+            color: rgb(201,205,212);
+        }
+        Button:hover{
+            background-color: rgb(229,230,235);
+        }
+        Button:pressed{
+            background-color: rgb(201,205,212);
+        }
         Button[Status=warning]{
             background-color: rgb(255,247,232);
             color: rgb(255,125,0);
+        }
+        Button[Status=warning][Disabled=true]{
+            color: rgb(255,207,139);
         }
         Button[Status=warning]:hover{
             background-color: rgb(255,228,186);
@@ -106,6 +131,9 @@ style = {
             background-color: rgb(255,236,232);
             color: rgb(245,63,63);
         }
+        Button[Status=danger][Disabled=true]{
+            color: rgb(251,172,163);
+        }
         Button[Status=danger]:hover{
             background-color: rgb(253,205,197);
         }
@@ -115,6 +143,9 @@ style = {
         Button[Status=success]{
             background-color: rgb(232,255,234);
             color: rgb(0,180,42);
+        }
+        Button[Status=success][Disabled=true]{
+            color: rgb(123,225,136);
         }
         Button[Status=success]:hover{
             background-color: rgb(175,240,181);
@@ -126,6 +157,9 @@ style = {
     'dashed': """
         Button{
             border: 1px dashed rgb(229,230,235);
+        }
+        Button[Disabled=true]{
+            color: rgb(201,205,212);
         }
         Button:hover{
             background-color: rgb(229,230,235);
@@ -140,6 +174,9 @@ style = {
             color: rgb(255,125,0);
             border-color: rgb(255,228,186);
         }
+        Button[Status=warning][Disabled=true]{
+            color: rgb(255,207,139);
+        }
         Button[Status=warning]:hover{
             background-color: rgb(255,228,186);
             border-color: rgb(255,207,139);
@@ -153,6 +190,9 @@ style = {
             color: rgb(245,63,63);
             border-color: rgb(253,205,197);
         }
+        Button[Status=danger][Disabled=true]{
+            color: rgb(251,172,163);
+        }
         Button[Status=danger]:hover{
             background-color: rgb(253,205,197);
             border-color: rgb(251,172,163);
@@ -165,6 +205,9 @@ style = {
             background-color: rgb(232,255,234);
             color: rgb(0,180,42);
             border-color: rgb(175,240,181);
+        }
+        Button[Status=success][Disabled=true]{
+            color: rgb(123,225,136);
         }
         Button[Status=success]:hover{
             background-color: rgb(175,240,181);
@@ -181,17 +224,27 @@ style = {
             color: rgb(22,93,255);
             border: 1px solid rgb(22,93,255);
         }
+        Button[Disabled=true]{
+            color: rgb(148,191,255);
+            border: 1px solid rgb(148,191,255);
+        }
         Button:hover{
             color: rgb(64,128,255);
             border-color: rgb(64,128,255);
+            background-color: transparent;
         }
         Button:pressed{
             color: rgb(14,66,210);
             border-color: rgb(14,66,210);
+            background-color: transparent;
         }
         Button[Status=warning]{
             color: rgb(255,125,0);
             border-color: rgb(255,125,0);
+        }
+        Button[Status=warning][Disabled=true]{
+            color: rgb(255,207,139);
+            border-color: rgb(255,207,139);
         }
         Button[Status=warning]:hover{
             color: rgb(255,154,46);
@@ -206,6 +259,10 @@ style = {
             color: rgb(245,63,63);
             border-color: rgb(245,63,63);
         }
+        Button[Status=danger][Disabled=true]{
+            color: rgb(251,172,163);
+            border-color: rgb(251,172,163);
+        }
         Button[Status=danger]:hover{
             color: rgb(247,101,96);
             border-color: rgb(247,101,96);
@@ -218,6 +275,10 @@ style = {
         Button[Status=success]{
             color: rgb(0,180,42);
             border-color: rgb(0,180,42);
+        }
+        Button[Status=success][Disabled=true]{
+            color: rgb(123,225,136);
+            border-color: rgb(123,225,136);
         }
         Button[Status=success]:hover{
             color: rgb(35,195,67);
@@ -235,6 +296,9 @@ style = {
             color: rgb(22,93,255);
             border: 1px solid transparent;
         }
+        Button[Disabled=true]{
+            color: rgb(148,191,255);
+        }
         Button:hover{
             background-color: rgb(242,243,245);
         }
@@ -244,11 +308,20 @@ style = {
         Button[Status=warning]{
             color: rgb(255,125,0);
         }
+        Button[Status=warning][Disabled=true]{
+            color: rgb(255,207,139);
+        }
         Button[Status=danger]{
             color: rgb(245,63,63);
         }
+        Button[Status=danger][Disabled=true]{
+            color: rgb(251,172,163);
+        }
         Button[Status=success]{
             color: rgb(0,180,42);
+        }
+        Button[Status=success][Disabled=true]{
+            color: rgb(123,225,136);
         }
     """
 }
@@ -262,21 +335,31 @@ icon_size = {
 
 
 class Button(QPushButton):
-    def __init__(self, text: str = None, btype: str = 'secondary', icon: QIcon = None, shape:str='square', size: str = 'default',status:str=None, long: bool = False,
-                  parent=None):
+    def __init__(self, text: str = None, btype: str = 'secondary', icon: QIcon = None, shape: str = 'square',
+                 size: str = 'default', status: str = None, disabled: bool = False, long: bool = False,
+                 parent=None):
         super().__init__(parent)
         self.setStyleSheet(style_base + style[btype])
-        self.setProperty('Shape', shape)
-        self.setProperty('Size', size)
-        if status:
-            self.setProperty('Status', status)
+        setFont(self)
         if text:
             self.setText(f"{' ' if icon else ''}{text}")
         else:
             self.setProperty('IconOnly', True)
-        if not long:
-            self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        setFont(self)
         if icon:
             self.setIcon(icon)
             self.setIconSize(QSize(icon_size[size], icon_size[size]))
+        self.setProperty('Shape', shape)
+        self.setProperty('Size', size)
+        if status:
+            self.setProperty('Status', status)
+        self.setDisabled(disabled)
+        if not long:
+            self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+
+    def setDisabled(self, arg__1: bool) -> None:
+        self.setProperty('Disabled', arg__1)
+        super().setDisabled(arg__1)
+
+    def setEnabled(self, arg__1: bool) -> None:
+        self.setProperty('Disabled', not arg__1)
+        super().setEnabled(arg__1)
