@@ -6,6 +6,8 @@ from PySide6.QtGui import QIcon, QColor, Qt
 from PySide6.QtWidgets import QPushButton, QWidget, QApplication, QGraphicsDropShadowEffect, QHBoxLayout, QSizePolicy
 
 from pyside_arco_widget.common.font import setFont
+from pyside_arco_widget.common.icon.svg import ArcoIcon
+from pyside_arco_widget.component.widget.icon import Icon
 
 style_base = """
     Button{
@@ -336,23 +338,26 @@ icon_size = {
 
 class Button(QPushButton):
     def __init__(self, text: str = None, btype: str = 'secondary', icon: QIcon = None, shape: str = 'square',
-                 size: str = 'default', status: str = None, disabled: bool = False, long: bool = False,
+                 size: str = 'default', status: str = None, disabled: bool = False, loading: bool = False,
+                 long: bool = False,
                  parent=None):
         super().__init__(parent)
+        self._loading = None
         self.setStyleSheet(style_base + style[btype])
         setFont(self)
-        if text:
-            self.setText(f"{' ' if icon else ''}{text}")
-        else:
-            self.setProperty('IconOnly', True)
+        self._text = text
+        self.setText(True if icon else False)
+        self.setIconSize(QSize(icon_size[size], icon_size[size]))
         if icon:
+            self._icon = icon
             self.setIcon(icon)
-            self.setIconSize(QSize(icon_size[size], icon_size[size]))
         self.setProperty('Shape', shape)
         self.setProperty('Size', size)
         if status:
             self.setProperty('Status', status)
         self.setDisabled(disabled)
+        if loading:
+            self.setLoading(loading)
         if not long:
             self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
 
@@ -363,3 +368,21 @@ class Button(QPushButton):
     def setEnabled(self, arg__1: bool) -> None:
         self.setProperty('Disabled', not arg__1)
         super().setEnabled(arg__1)
+
+    def setText(self, has_icon: bool = True):
+        if self._text:
+            super().setText(f'{' ' if has_icon else ''}{self._text}')
+        else:
+            self.setProperty('IconOnly', True)
+
+    def setLoading(self, loading: bool):
+        self.setProperty('Loading', loading)
+        if loading:
+            if not self._loading:
+                self._loading = Icon(self, ArcoIcon.Loading.path, self.iconSize())
+            self._loading.start_rotation()
+            self.setText(loading)
+        else:
+            self._loading.stop_rotation()
+            self.setIcon(self._icon)
+            self.setText(loading)

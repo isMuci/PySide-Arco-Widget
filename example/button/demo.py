@@ -2,7 +2,7 @@ import sys
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon, QFont
-from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QLabel
+from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QLabel, QGridLayout
 
 from pyside_arco_widget.common.font import setFont
 from pyside_arco_widget.common.icon.svg import ArcoIcon
@@ -214,6 +214,15 @@ class Disabled(QWidget):
         self.widget3_layout.addWidget(self.button19)
         self.layout.addWidget(self.widget3)
 
+class Loading(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.layout = QGridLayout(self)
+
+        self.button = Button('Loading',btype='primary', icon=ArcoIcon.Loading.svg)
+        self.button1 = Button('Loading',btype='primary', loading=True)
+        self.layout.addWidget(self.button)
+        self.layout.addWidget(self.button1)
 
 class ButtonDemo(BaseView):
     def __init__(self):
@@ -250,6 +259,11 @@ class ButtonDemo(BaseView):
         setFont(self.label4, 20)
         self.layout.addWidget(self.label4)
         self.layout.addWidget(Disabled())
+
+        self.label5 = QLabel('加载中按钮')
+        setFont(self.label5, 20)
+        self.layout.addWidget(self.label5)
+        self.layout.addWidget(Loading())
 
 
 if __name__ == '__main__':

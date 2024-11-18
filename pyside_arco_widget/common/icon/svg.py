@@ -17,7 +17,8 @@ class Svg:
 class SvgEnum(Enum):
     def __new__(cls, path):
         self = object.__new__(cls)
-        self._value_ = Svg(path)
+        self.path=f':/pysidearcowidget/image/icon/{path}.svg'
+        self._value_ = Svg(self.path)
         return self
 
     @property
@@ -26,6 +27,8 @@ class SvgEnum(Enum):
 
 
 class ArcoIcon(SvgEnum):
-    Plus = ':/pysidearcowidget/image/icon/Plus.svg'
-    Delete = ':/pysidearcowidget/image/icon/Delete.svg'
+    Plus = 'Plus'
+    Delete = 'Delete'
+    Loading = 'Loading'
+
 

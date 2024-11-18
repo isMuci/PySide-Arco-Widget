@@ -3,6 +3,7 @@
 
         <file>image/icon/Plus.svg</file>
         <file>image/icon/Delete.svg</file>
+        <file>image/icon/Loading.svg</file>
 
     </qresource>
 </RCC>
