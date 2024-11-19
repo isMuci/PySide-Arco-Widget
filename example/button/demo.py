@@ -219,10 +219,16 @@ class Loading(QWidget):
         super().__init__()
         self.layout = QGridLayout(self)
 
-        self.button = Button('Loading',btype='primary', icon=ArcoIcon.Loading.svg)
-        self.button1 = Button('Loading',btype='primary', loading=True)
-        self.layout.addWidget(self.button)
-        self.layout.addWidget(self.button1)
+        self.button = Button('Loading',btype='primary', loading=True)
+        # self.button.setFixedWidth(100)
+        self.button1 = Button('Loading', loading=True)
+        # self.button1.setFixedWidth(100)
+        self.button2 = Button('Loading',btype='dashed', loading=True)
+        # self.button2.setFixedWidth(100)
+        self.layout.addWidget(self.button,0,0)
+        self.layout.addWidget(self.button1,0,1)
+        self.layout.addWidget(self.button2,0,2)
+
 
 class ButtonDemo(BaseView):
     def __init__(self):

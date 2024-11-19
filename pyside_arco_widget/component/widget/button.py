@@ -50,6 +50,11 @@ style_base = """
         padding: 0 19px;
         height: 36px;
     }
+    #LoadingOverlay {
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 2px;
+        border: 1px solid transparent;
+    }
 """
 
 style = {
@@ -61,6 +66,17 @@ style = {
         }
         Button[Disabled=true]{
             background-color: rgb(148,191,255);
+        }
+        Button[Loading=true]::before{
+            content: "";
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            bottom: -1px;
+            left: -1px;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: inherit;
         }
         Button:hover{
             background-color: rgb(64,128,255);
@@ -342,7 +358,7 @@ class Button(QPushButton):
                  long: bool = False,
                  parent=None):
         super().__init__(parent)
-        self._loading = None
+        self._init_loading()
         self.setStyleSheet(style_base + style[btype])
         setFont(self)
         self._text = text
@@ -360,6 +376,17 @@ class Button(QPushButton):
             self.setLoading(loading)
         if not long:
             self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        self.setWindowOpacity(0.4)
+
+    def _init_loading(self):
+        self._loading = None
+        self._loading_overlay = QWidget(self)
+        self._loading_overlay.setObjectName('LoadingOverlay')
+        self._loading_overlay.setVisible(False)
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self._loading_overlay.setGeometry(self.rect())
 
     def setDisabled(self, arg__1: bool) -> None:
         self.setProperty('Disabled', arg__1)
@@ -377,6 +404,8 @@ class Button(QPushButton):
 
     def setLoading(self, loading: bool):
         self.setProperty('Loading', loading)
+        self._loading_overlay.setVisible(loading)
+        super().setDisabled(loading)
         if loading:
             if not self._loading:
                 self._loading = Icon(self, ArcoIcon.Loading.path, self.iconSize())
