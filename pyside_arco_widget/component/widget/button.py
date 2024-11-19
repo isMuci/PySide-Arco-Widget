@@ -398,7 +398,7 @@ class Button(QPushButton):
 
     def setText(self, has_icon: bool = True):
         if self._text:
-            super().setText(f'{' ' if has_icon else ''}{self._text}')
+            super().setText(f"{' ' if has_icon else ''}{self._text}")
         else:
             self.setProperty('IconOnly', True)
 
