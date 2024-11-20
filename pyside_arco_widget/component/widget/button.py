@@ -2,12 +2,12 @@ from functools import singledispatchmethod
 from typing import Union
 
 from PySide6.QtCore import QSize
-from PySide6.QtGui import QIcon, QColor, Qt
+from PySide6.QtGui import QIcon, QColor, Qt, QPixmap
 from PySide6.QtWidgets import QPushButton, QWidget, QApplication, QGraphicsDropShadowEffect, QHBoxLayout, QSizePolicy
 
 from pyside_arco_widget.common.font import setFont
-from pyside_arco_widget.common.icon.svg import ArcoIcon
-from pyside_arco_widget.component.widget.icon import Icon
+from pyside_arco_widget.common.icon.icon import SVGIcon
+from pyside_arco_widget.common.icon.svg import ArcoIcon, SVGRenderer
 
 style_base = """
     Button{
@@ -353,7 +353,8 @@ icon_size = {
 
 
 class Button(QPushButton):
-    def __init__(self, text: str = None, btype: str = 'secondary', icon: QIcon = None, shape: str = 'square',
+    def __init__(self, text: str = None, btype: str = 'secondary', icon: [QIcon | SVGRenderer] = None,
+                 shape: str = 'square',
                  size: str = 'default', status: str = None, disabled: bool = False, loading: bool = False,
                  long: bool = False,
                  parent=None):
@@ -364,9 +365,13 @@ class Button(QPushButton):
         self._text = text
         self.setText(True if icon else False)
         self.setIconSize(QSize(icon_size[size], icon_size[size]))
+        self._icon = QIcon()
         if icon:
-            self._icon = icon
-            self.setIcon(icon)
+            if isinstance(icon, QIcon):
+                self._icon = icon
+            elif isinstance(icon, SVGRenderer):
+                self._icon = SVGIcon(self, icon)
+            self.setIcon(self._icon)
         self.setProperty('Shape', shape)
         self.setProperty('Size', size)
         if status:
@@ -384,6 +389,12 @@ class Button(QPushButton):
         self._loading_overlay.setObjectName('LoadingOverlay')
         self._loading_overlay.setVisible(False)
 
+    def setIcon(self, icon: [QIcon | SVGIcon | QPixmap]):
+        if isinstance(icon, SVGIcon):
+            super().setIcon(icon.pixmap)
+        else:
+            super().setIcon(icon)
+
     def resizeEvent(self, event):
         super().resizeEvent(event)
         self._loading_overlay.setGeometry(self.rect())
@@ -397,6 +408,7 @@ class Button(QPushButton):
         super().setEnabled(arg__1)
 
     def setText(self, has_icon: bool = True):
+        print(has_icon)
         if self._text:
             super().setText(f"{' ' if has_icon else ''}{self._text}")
         else:
@@ -408,10 +420,10 @@ class Button(QPushButton):
         super().setDisabled(loading)
         if loading:
             if not self._loading:
-                self._loading = Icon(self, ArcoIcon.Loading.path, self.iconSize())
-            self._loading.start_rotation()
-            self.setText(loading)
+                self._loading = SVGIcon(self, ArcoIcon.Loading.renderer, True, self.iconSize())
+            self.setIcon(self._loading)
+            self.setText(True)
         else:
-            self._loading.stop_rotation()
+            self._loading=None
             self.setIcon(self._icon)
-            self.setText(loading)
+            self.setText(not self._icon.isNull())

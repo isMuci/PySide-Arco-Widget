@@ -1,8 +1,9 @@
 import sys
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QIcon, QFont
-from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QLabel, QGridLayout
+from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QLabel, QGridLayout, \
+    QScrollArea
 
 from pyside_arco_widget.common.font import setFont
 from pyside_arco_widget.common.icon.svg import ArcoIcon
@@ -214,26 +215,49 @@ class Disabled(QWidget):
         self.widget3_layout.addWidget(self.button19)
         self.layout.addWidget(self.widget3)
 
+
 class Loading(QWidget):
     def __init__(self):
         super().__init__()
         self.layout = QGridLayout(self)
+        self.layout.setAlignment(Qt.AlignLeft)
 
-        self.button = Button('Loading',btype='primary', loading=True)
-        # self.button.setFixedWidth(100)
+        self.button = Button('Loading', 'primary', loading=True)
+        self.button.setFixedWidth(100)
         self.button1 = Button('Loading', loading=True)
-        # self.button1.setFixedWidth(100)
-        self.button2 = Button('Loading',btype='dashed', loading=True)
-        # self.button2.setFixedWidth(100)
-        self.layout.addWidget(self.button,0,0)
-        self.layout.addWidget(self.button1,0,1)
-        self.layout.addWidget(self.button2,0,2)
+        self.button1.setFixedWidth(100)
+        self.button2 = Button('Loading', 'dashed', loading=True)
+        self.button2.setFixedWidth(100)
+        self.layout.addWidget(self.button, 0, 0)
+        self.layout.addWidget(self.button1, 0, 1)
+        self.layout.addWidget(self.button2, 0, 2)
+
+        self.button3 = Button(btype='primary', shape='circle', loading=True)
+        self.button4 = Button(shape='circle', loading=True)
+        self.button5 = Button(btype='dashed', shape='circle', loading=True)
+        self.layout.addWidget(self.button3, 1, 0)
+        self.layout.addWidget(self.button4, 1, 1)
+        self.layout.addWidget(self.button5, 1, 2)
+
+        self.button6 = Button('Click Me', 'primary')
+        self.button6.clicked.connect(lambda: self.button_clicked(self.button6))
+        self.button7 = Button('Click Me', 'primary', ArcoIcon.Plus.svg)
+        self.button7.clicked.connect(lambda: self.button_clicked(self.button7))
+        self.layout.addWidget(self.button6, 2, 0)
+        self.layout.addWidget(self.button7, 2, 1)
+
+    def button_clicked(self, button):
+        button.setLoading(True)
+        QTimer.singleShot(2000, lambda: self.button_finished(button))
+
+    @staticmethod
+    def button_finished(button):
+        button.setLoading(False)
 
 
 class ButtonDemo(BaseView):
     def __init__(self):
         super().__init__()
-
         self.layout = QVBoxLayout(self)
 
         self.label = QLabel('基本用法')
