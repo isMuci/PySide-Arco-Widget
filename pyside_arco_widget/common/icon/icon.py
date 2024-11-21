@@ -13,7 +13,6 @@ class SVGIcon:
         self.setSVGAnimation(animation)
 
     def isNull(self):
-        print('is null')
         return True if self._renderer else False
 
     def setSVGAnimation(self, animation: bool):

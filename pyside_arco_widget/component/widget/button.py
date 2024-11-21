@@ -3,7 +3,8 @@ from typing import Union
 
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QIcon, QColor, Qt, QPixmap
-from PySide6.QtWidgets import QPushButton, QWidget, QApplication, QGraphicsDropShadowEffect, QHBoxLayout, QSizePolicy
+from PySide6.QtWidgets import QPushButton, QWidget, QApplication, QGraphicsDropShadowEffect, QHBoxLayout, QSizePolicy, \
+    QButtonGroup
 
 from pyside_arco_widget.common.font import setFont
 from pyside_arco_widget.common.icon.icon import SVGIcon
@@ -353,14 +354,14 @@ icon_size = {
 
 
 class Button(QPushButton):
-    def __init__(self, text: str = None, btype: str = 'secondary', icon: [QIcon | SVGRenderer] = None,
+    def __init__(self, text: str = None, bType: str = 'secondary', icon: [QIcon | SVGRenderer] = None,
                  shape: str = 'square',
                  size: str = 'default', status: str = None, disabled: bool = False, loading: bool = False,
-                 long: bool = False,
+                 long: bool = False, iconRight: bool = False,
                  parent=None):
         super().__init__(parent)
         self._init_loading()
-        self.setStyleSheet(style_base + style[btype])
+        self.setStyleSheet(style_base + style[bType])
         setFont(self)
         self._text = text
         self.setText(True if icon else False)
@@ -379,6 +380,8 @@ class Button(QPushButton):
         self.setDisabled(disabled)
         if loading:
             self.setLoading(loading)
+        if iconRight:
+            self.setLayoutDirection(Qt.RightToLeft)
         if not long:
             self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         self.setWindowOpacity(0.4)
@@ -408,7 +411,6 @@ class Button(QPushButton):
         super().setEnabled(arg__1)
 
     def setText(self, has_icon: bool = True):
-        print(has_icon)
         if self._text:
             super().setText(f"{' ' if has_icon else ''}{self._text}")
         else:
@@ -424,6 +426,16 @@ class Button(QPushButton):
             self.setIcon(self._loading)
             self.setText(True)
         else:
-            self._loading=None
+            self._loading = None
             self.setIcon(self._icon)
             self.setText(not self._icon.isNull())
+
+
+class ButtonGroup(QWidget):
+    def __init__(self, buttons: list[Button] = None, parent=None):
+        super().__init__(parent)
+        self.layout = QHBoxLayout(self)
+        self.layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.layout.setSpacing(0)
+        if buttons:
+            [self.layout.addWidget(button) for button in buttons]

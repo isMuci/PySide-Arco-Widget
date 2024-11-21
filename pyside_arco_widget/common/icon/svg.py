@@ -27,13 +27,21 @@ class SvgEnum(Enum):
 
 
 class ArcoIcon(SvgEnum):
-    Plus = 'Plus'
-    Delete = 'Delete'
-    Loading = 'Loading'
+    Plus = 'plus'
+    Delete = 'delete'
+    Loading = 'loading'
+    More = 'more'
+    Down = 'down'
+    Left = 'left'
+    Right = 'right'
+    Start = 'start'
+    Message = 'message'
+    Settings = 'settings'
+
 
 
 class SVGRenderer(QSvgRenderer):
-    # :/pysidearcowidget/image/icon/Loading.svg
+    # :/pysidearcowidget/image/icon/loading.svg
     def __init__(self, filename: str, parent=None):
         super().__init__()
         self.filename = filename
@@ -83,6 +91,7 @@ class SVGRenderer(QSvgRenderer):
                 'repeatCount': 'indefinite'  # 无限循环
             })
             g_element.append(animate_transform)
+            print('animateTransform')
 
             self._rotate_animate_xml = ET.tostring(svg_root, encoding='unicode')
         else:

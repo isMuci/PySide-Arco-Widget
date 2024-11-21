@@ -1,9 +1,16 @@
 <RCC>
     <qresource prefix="/pysidearcowidget">
 
-        <file>image/icon/Plus.svg</file>
-        <file>image/icon/Delete.svg</file>
-        <file>image/icon/Loading.svg</file>
+        <file>image/icon/plus.svg</file>
+        <file>image/icon/delete.svg</file>
+        <file>image/icon/loading.svg</file>
+        <file>image/icon/down.svg</file>
+        <file>image/icon/more.svg</file>
+        <file>image/icon/left.svg</file>
+        <file>image/icon/right.svg</file>
+        <file>image/icon/start.svg</file>
+        <file>image/icon/message.svg</file>
+        <file>image/icon/settings.svg</file>
 
     </qresource>
 </RCC>
