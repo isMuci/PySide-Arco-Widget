@@ -91,7 +91,6 @@ class SVGRenderer(QSvgRenderer):
                 'repeatCount': 'indefinite'  # 无限循环
             })
             g_element.append(animate_transform)
-            print('animateTransform')
 
             self._rotate_animate_xml = ET.tostring(svg_root, encoding='unicode')
         else:

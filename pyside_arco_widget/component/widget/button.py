@@ -31,23 +31,23 @@ style_base = """
         width: 32px;
         padding: 0;
     }
-    Button[Shape=circle]{
+    Button[Shape=circle], #LoadingOverlay[Shape=circle]{
         width: 32px;
         padding: 0;
         text-align: center;
         border-radius: 16px;
     }
-    Button[Shape=round]{
+    Button[Shape=round], #LoadingOverlay[Shape=round]{
         border-radius: 16px;
     }
-    Button[Size=mini]{
+    Button[Size=mini], #LoadingOverlay[Size=mini]{
         font-size: 12px;
         height: 24px;
     }
-    Button[Size=small]{
+    Button[Size=small], #LoadingOverlay[Size=small]{
         height: 28px;
     }
-    Button[Size=large]{
+    Button[Size=large], #LoadingOverlay[Size=large]{
         padding: 0 19px;
         height: 36px;
     }
@@ -354,14 +354,12 @@ icon_size = {
 
 
 class Button(QPushButton):
-    def __init__(self, text: str = None, bType: str = 'secondary', icon: [QIcon | SVGRenderer] = None,
-                 shape: str = 'square',
-                 size: str = 'default', status: str = None, disabled: bool = False, loading: bool = False,
-                 long: bool = False, iconRight: bool = False,
-                 parent=None):
+    def __init__(self, text: str = None, button_type: str = 'secondary', icon: [QIcon | SVGRenderer] = None,
+                 shape: str = 'square', size: str = 'default', status: str = None, disabled: bool = False,
+                 loading: bool = False, long: bool = False, icon_right: bool = False, parent=None):
         super().__init__(parent)
         self._init_loading()
-        self.setStyleSheet(style_base + style[bType])
+        self.setStyleSheet(style_base + style[button_type])
         setFont(self)
         self._text = text
         self.setText(True if icon else False)
@@ -373,18 +371,55 @@ class Button(QPushButton):
             elif isinstance(icon, SVGRenderer):
                 self._icon = SVGIcon(self, icon)
             self.setIcon(self._icon)
-        self.setProperty('Shape', shape)
-        self.setProperty('Size', size)
-        if status:
-            self.setProperty('Status', status)
+        self.setShape(shape)
+        self.setASize(size)
+        self.setStatus(status)
         self.setDisabled(disabled)
         if loading:
             self.setLoading(loading)
-        if iconRight:
+        if icon_right:
             self.setLayoutDirection(Qt.RightToLeft)
-        if not long:
+        self.setLong(long)
+
+    def setShape(self, shape: str):
+        self._shape = shape
+        self.setProperty('Shape', shape)
+        self._loading_overlay.setProperty('Shape', shape)
+
+    @property
+    def shape(self):
+        return self._shape
+
+    def setASize(self, size: str):
+        self._size = size
+        self.setProperty('Size', size)
+        self._loading_overlay.setProperty('Size', size)
+
+    @property
+    def aSize(self):
+        return self._size
+
+    def setStatus(self, status: str):
+        if status in ['warning', 'danger', 'success']:
+            self._status = status
+            self.setProperty('Status', status)
+        else:
+            self._status = None
+
+    @property
+    def status(self):
+        return self._status
+
+    def setLong(self, long: bool):
+        self._long = long
+        if long:
+            self.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        else:
             self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        self.setWindowOpacity(0.4)
+
+    @property
+    def long(self):
+        return self._long
 
     def _init_loading(self):
         self._loading = None
@@ -402,13 +437,12 @@ class Button(QPushButton):
         super().resizeEvent(event)
         self._loading_overlay.setGeometry(self.rect())
 
-    def setDisabled(self, arg__1: bool) -> None:
-        self.setProperty('Disabled', arg__1)
-        super().setDisabled(arg__1)
+    def setDisabled(self, disabled: bool):
+        self.setProperty('Disabled', disabled)
+        super().setDisabled(disabled)
 
-    def setEnabled(self, arg__1: bool) -> None:
-        self.setProperty('Disabled', not arg__1)
-        super().setEnabled(arg__1)
+    def setEnabled(self, enabled: bool):
+        self.setDisabled(not enabled)
 
     def setText(self, has_icon: bool = True):
         if self._text:
@@ -430,12 +464,67 @@ class Button(QPushButton):
             self.setIcon(self._icon)
             self.setText(not self._icon.isNull())
 
+    def setInButtonGroup(self, in_group: bool):
+        if in_group:
+            # 移除原有的border-radius样式
+            current_style = self.styleSheet()
+            new_style = current_style.replace('border-radius: 16px;', '').replace('border-radius: 2px;', '')
+            self.setStyleSheet(new_style)
+            print(self.styleSheet())
+            self.update()
+
 
 class ButtonGroup(QWidget):
     def __init__(self, buttons: list[Button] = None, parent=None):
         super().__init__(parent)
         self.layout = QHBoxLayout(self)
         self.layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.layout.setContentsMargins(10, 10, 10, 10)
         self.layout.setSpacing(0)
         if buttons:
-            [self.layout.addWidget(button) for button in buttons]
+            self.add_buttons(buttons)
+
+    def add_buttons(self, buttons: list[Button]):
+        """添加一组按钮到ButtonGroup"""
+        for i, button in enumerate(buttons):
+            self.add_button(button)
+            if i == 0:  # 第一个按钮
+                button.setStyleSheet(button.styleSheet()+"""
+                    Button {
+                        border-top-left-radius: 16px !important;
+                        border-bottom-left-radius: 16px !important;
+                        border-top-right-radius: 0 !important;
+                        border-bottom-right-radius: 0 !important;
+                    }
+                """)
+            elif i == len(buttons) - 1:  # 最后一个按钮
+                button.setStyleSheet(button.styleSheet()+"""
+                    Button {
+                        border-top-left-radius: 0 !important;
+                        border-bottom-left-radius: 0 !important;
+                        border-top-right-radius:  16px !important;
+                        border-bottom-right-radius: 16px !important;
+                    }
+                """)
+            else:  # 中间的按钮
+                button.setStyleSheet(button.styleSheet()+"""
+                    CustomPushButton {
+                        border: 1px solid #CCCCCC;
+                        border-radius: 0px;
+                        border-right: none;
+                        background-color: white;
+                        padding: 5px;
+                    }
+                    CustomPushButton:checked {
+                        background-color: #E0E0E0;
+                    }
+                    CustomPushButton:hover {
+                        background-color: #F5F5F5;
+                    }
+                """)
+
+
+    def add_button(self, button: Button):
+        """添加单个按钮到ButtonGroup"""
+        button.setInButtonGroup(True)
+        self.layout.addWidget(button)
