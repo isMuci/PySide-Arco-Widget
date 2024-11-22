@@ -12,5 +12,7 @@
         <file>image/icon/message.svg</file>
         <file>image/icon/settings.svg</file>
 
+        <file>qss/button.qss</file>
+
     </qresource>
 </RCC>

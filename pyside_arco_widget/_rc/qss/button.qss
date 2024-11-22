@@ -1,0 +1,319 @@
+Button{
+    padding: 0 15px;
+    height: 32px;
+    border-radius: 2px;
+    font-size: 14px;
+    outline: none;
+    background-color: rgb(242,243,245);
+    color: rgb(78,89,105);
+    border: 1px solid transparent;
+}
+Button:hover{
+    background-color: rgb(229,230,235);
+}
+Button:pressed{
+    background-color: rgb(201,205,212);
+}
+Button[IconOnly=true]{
+    width: 32px;
+    padding: 0;
+}
+Button[Shape=circle], #LoadingOverlay[Shape=circle]{
+    width: 32px;
+    padding: 0;
+    text-align: center;
+    border-radius: 16px;
+}
+Button[Shape=round], #LoadingOverlay[Shape=round]{
+    border-radius: 16px;
+}
+Button[Size=mini], #LoadingOverlay[Size=mini]{
+    font-size: 12px;
+    height: 24px;
+}
+Button[Size=small], #LoadingOverlay[Size=small]{
+    height: 28px;
+}
+Button[Size=large], #LoadingOverlay[Size=large]{
+    padding: 0 19px;
+    height: 36px;
+}
+#LoadingOverlay {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 2px;
+    border: 1px solid transparent;
+}
+Button[Type=primary]{
+    background-color: rgb(22,93,255);
+    color: #ffffff;
+    border: 1px solid transparent;
+}
+Button[Type=primary][Disabled=true]{
+    background-color: rgb(148,191,255);
+}
+Button[Type=primary][Loading=true]::before{
+    content: "";
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+    left: -1px;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: inherit;
+}
+Button[Type=primary]:hover{
+    background-color: rgb(64,128,255);
+}
+Button[Type=primary]:pressed{
+    background-color: rgb(14,66,210);
+}
+Button[Type=primary][Status=warning]{
+    background-color: rgb(255,150,38);
+}
+Button[Type=primary][Status=warning][Disabled=true]{
+    background-color: rgb(255,207,139);
+}
+Button[Type=primary][Status=warning]:hover{
+    background-color: rgb(255,154,46);
+}
+Button[Type=primary][Status=warning]:pressed{
+    background-color: rgb(210,95,0);
+}
+Button[Type=primary][Status=danger]{
+    background-color: rgb(245,63,63);
+}
+Button[Type=primary][Status=danger][Disabled=true]{
+    background-color: rgb(251,172,163);
+}
+Button[Type=primary][Status=danger]:hover{
+    background-color: rgb(247,101,96);
+}
+Button[Type=primary][Status=danger]:pressed{
+    background-color: rgb(203,39,45);
+}
+Button[Type=primary][Status=success]{
+    background-color: rgb(0,180,42);
+}
+Button[Type=primary][Status=success][Disabled=true]{
+    background-color: rgb(123,225,136);
+}
+Button[Type=primary][Status=success]:hover{
+    background-color: rgb(35,195,67);
+}
+Button[Type=primary][Status=success]:pressed{
+    background-color: rgb(0,154,41);
+}
+Button[Type=secondary][Disabled=true]{
+    background-color: rgb(247,248,250);
+    color: rgb(201,205,212);
+}
+Button[Type=secondary]:hover{
+    background-color: rgb(229,230,235);
+}
+Button[Type=secondary]:pressed{
+    background-color: rgb(201,205,212);
+}
+Button[Type=secondary][Status=warning]{
+    background-color: rgb(255,247,232);
+    color: rgb(255,125,0);
+}
+Button[Type=secondary][Status=warning][Disabled=true]{
+    color: rgb(255,207,139);
+}
+Button[Type=secondary][Status=warning]:hover{
+    background-color: rgb(255,228,186);
+}
+Button[Type=secondary][Status=warning]:pressed{
+    background-color: rgb(255,207,139);
+}
+Button[Type=secondary][Status=danger]{
+    background-color: rgb(255,236,232);
+    color: rgb(245,63,63);
+}
+Button[Type=secondary][Status=danger][Disabled=true]{
+    color: rgb(251,172,163);
+}
+Button[Type=secondary][Status=danger]:hover{
+    background-color: rgb(253,205,197);
+}
+Button[Type=secondary][Status=danger]:pressed{
+    background-color: rgb(251,172,163);
+}
+Button[Type=secondary][Status=success]{
+    background-color: rgb(232,255,234);
+    color: rgb(0,180,42);
+}
+Button[Type=secondary][Status=success][Disabled=true]{
+    color: rgb(123,225,136);
+}
+Button[Type=secondary][Status=success]:hover{
+    background-color: rgb(175,240,181);
+}
+Button[Type=secondary][Status=success]:pressed{
+    background-color: rgb(123,225,136);
+}
+Button[Type=dashed]{
+    border: 1px dashed rgb(229,230,235);
+}
+Button[Type=dashed][Disabled=true]{
+    color: rgb(201,205,212);
+}
+Button[Type=dashed]:hover{
+    background-color: rgb(229,230,235);
+    border-color: rgb(201,205,212);
+}
+Button[Type=dashed]:pressed{
+    background-color: rgb(201,205,212);
+    border-color: rgb(169,174,184);
+}
+Button[Type=dashed][Status=warning]{
+    background-color: rgb(255,247,232);
+    color: rgb(255,125,0);
+    border-color: rgb(255,228,186);
+}
+Button[Type=dashed][Status=warning][Disabled=true]{
+    color: rgb(255,207,139);
+}
+Button[Type=dashed][Status=warning]:hover{
+    background-color: rgb(255,228,186);
+    border-color: rgb(255,207,139);
+}
+Button[Type=dashed][Status=warning]:pressed{
+    background-color: rgb(255,207,139);
+    border-color: rgb(255,182,93);
+}
+Button[Type=dashed][Status=danger]{
+    background-color: rgb(255,236,232);
+    color: rgb(245,63,63);
+    border-color: rgb(253,205,197);
+}
+Button[Type=dashed][Status=danger][Disabled=true]{
+    color: rgb(251,172,163);
+}
+Button[Type=dashed][Status=danger]:hover{
+    background-color: rgb(253,205,197);
+    border-color: rgb(251,172,163);
+}
+Button[Type=dashed][Status=danger]:pressed{
+    background-color: rgb(251,172,163);
+    border-color: rgb(249,137,129);
+}
+Button[Type=dashed][Status=success]{
+    background-color: rgb(232,255,234);
+    color: rgb(0,180,42);
+    border-color: rgb(175,240,181);
+}
+Button[Type=dashed][Status=success][Disabled=true]{
+    color: rgb(123,225,136);
+}
+Button[Type=dashed][Status=success]:hover{
+    background-color: rgb(175,240,181);
+    border-color: rgb(123,225,136);
+}
+Button[Type=dashed][Status=success]:pressed{
+    background-color: rgb(123,225,136);
+    border-color: rgb(76,210,99);
+}
+Button[Type=outline]{
+    background-color: transparent;
+    color: rgb(22,93,255);
+    border: 1px solid rgb(22,93,255);
+}
+Button[Type=outline][Disabled=true]{
+    color: rgb(148,191,255);
+    border: 1px solid rgb(148,191,255);
+}
+Button[Type=outline]:hover{
+    color: rgb(64,128,255);
+    border-color: rgb(64,128,255);
+    background-color: transparent;
+}
+Button[Type=outline]:pressed{
+    color: rgb(14,66,210);
+    border-color: rgb(14,66,210);
+    background-color: transparent;
+}
+Button[Type=outline][Status=warning]{
+    color: rgb(255,125,0);
+    border-color: rgb(255,125,0);
+}
+Button[Type=outline][Status=warning][Disabled=true]{
+    color: rgb(255,207,139);
+    border-color: rgb(255,207,139);
+}
+Button[Type=outline][Status=warning]:hover{
+    color: rgb(255,154,46);
+    border-color: rgb(255,154,46);
+    background-color: transparent;
+}
+Button[Type=outline][Status=warning]:pressed{
+    color: rgb(210,95,0);
+    border-color: rgb(210,95,0);
+}
+Button[Type=outline][Status=danger]{
+    color: rgb(245,63,63);
+    border-color: rgb(245,63,63);
+}
+Button[Type=outline][Status=danger][Disabled=true]{
+    color: rgb(251,172,163);
+    border-color: rgb(251,172,163);
+}
+Button[Type=outline][Status=danger]:hover{
+    color: rgb(247,101,96);
+    border-color: rgb(247,101,96);
+    background-color: transparent;
+}
+Button[Type=outline][Status=danger]:pressed{
+    color: rgb(203,39,45);
+    border-color: rgb(203,39,45);
+}
+Button[Type=outline][Status=success]{
+    color: rgb(0,180,42);
+    border-color: rgb(0,180,42);
+}
+Button[Type=outline][Status=success][Disabled=true]{
+    color: rgb(123,225,136);
+    border-color: rgb(123,225,136);
+}
+Button[Type=outline][Status=success]:hover{
+    color: rgb(35,195,67);
+    border-color: rgb(35,195,67);
+    background-color: transparent;
+}
+Button[Type=outline][Status=success]:pressed{
+    color: rgb(0,154,41);
+    border-color: rgb(0,154,41);
+}
+Button[Type=text]{
+    background-color: transparent;
+    color: rgb(22,93,255);
+    border: 1px solid transparent;
+}
+Button[Type=text][Disabled=true]{
+    color: rgb(148,191,255);
+}
+Button[Type=text]:hover{
+    background-color: rgb(242,243,245);
+}
+Button[Type=text]:pressed{
+    background-color: rgb(229,230,235);
+}
+Button[Type=text][Status=warning]{
+    color: rgb(255,125,0);
+}
+Button[Type=text][Status=warning][Disabled=true]{
+    color: rgb(255,207,139);
+}
+Button[Type=text][Status=danger]{
+    color: rgb(245,63,63);
+}
+Button[Type=text][Status=danger][Disabled=true]{
+    color: rgb(251,172,163);
+}
+Button[Type=text][Status=success]{
+    color: rgb(0,180,42);
+}
+Button[Type=text][Status=success][Disabled=true]{
+    color: rgb(123,225,136);
+}

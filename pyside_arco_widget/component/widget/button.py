@@ -9,6 +9,7 @@ from PySide6.QtWidgets import QPushButton, QWidget, QApplication, QGraphicsDropS
 from pyside_arco_widget.common.font import setFont
 from pyside_arco_widget.common.icon.icon import SVGIcon
 from pyside_arco_widget.common.icon.svg import ArcoIcon, SVGRenderer
+from pyside_arco_widget.common.style_sheet import ArcoStyleSheet, addStyleSheet
 
 style_base = """
     Button{
@@ -359,10 +360,12 @@ class Button(QPushButton):
                  loading: bool = False, long: bool = False, icon_right: bool = False, parent=None):
         super().__init__(parent)
         self._init_loading()
-        self.setStyleSheet(style_base + style[button_type])
+        # self.setStyleSheet(style_base + style[button_type])
+        ArcoStyleSheet.BUTTON.apply(self)
         setFont(self)
         self._text = text
         self.setText(True if icon else False)
+        self.setButtonType(button_type)
         self.setIconSize(QSize(icon_size[size], icon_size[size]))
         self._icon = QIcon()
         if icon:
@@ -380,6 +383,15 @@ class Button(QPushButton):
         if icon_right:
             self.setLayoutDirection(Qt.RightToLeft)
         self.setLong(long)
+
+    def setButtonType(self, button_type: str):
+        self._button_type = button_type
+        if button_type in ['primary', 'secondary', 'outline', 'text']:
+            self.setProperty('Type', button_type)
+
+    @property
+    def buttonType(self):
+        return self._button_type
 
     def setShape(self, shape: str):
         self._shape = shape
@@ -489,14 +501,7 @@ class ButtonGroup(QWidget):
         for i, button in enumerate(buttons):
             self.add_button(button)
             if i == 0:  # 第一个按钮
-                button.setStyleSheet(button.styleSheet()+"""
-                    Button {
-                        border-top-left-radius: 16px !important;
-                        border-bottom-left-radius: 16px !important;
-                        border-top-right-radius: 0 !important;
-                        border-bottom-right-radius: 0 !important;
-                    }
-                """)
+                addStyleSheet(button, ArcoStyleSheet.BUTTON_GROUP_FIRST)
             elif i == len(buttons) - 1:  # 最后一个按钮
                 button.setStyleSheet(button.styleSheet()+"""
                     Button {

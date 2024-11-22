@@ -1,0 +1,20 @@
+Button {
+    border-radius: 0;
+    border-right: 1px solid rgb(64,128,255);
+}
+Button[Shape=round] {
+    padding: 0 8px;
+}
+Button[Position=first] {
+    border-left-radius: 2px;
+}
+Button[Shape=round][Position=first] {
+    border-left-radius: 16px;
+}
+Button[Position=last] {
+    border-right-radius: 2px;
+    border-right: 1px solid transparent;
+}
+Button[Shape=round][Position=last] {
+    border-right-radius: 16px;
+}
