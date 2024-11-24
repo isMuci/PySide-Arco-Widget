@@ -26,23 +26,11 @@ class SvgEnum(Enum):
         return SVGRenderer(self.value)
 
 
-class ArcoIcon(SvgEnum):
-    Plus = 'plus'
-    Delete = 'delete'
-    Loading = 'loading'
-    More = 'more'
-    Down = 'down'
-    Left = 'left'
-    Right = 'right'
-    Start = 'start'
-    Message = 'message'
-    Settings = 'settings'
-
 
 
 class SVGRenderer(QSvgRenderer):
     # :/pysidearcowidget/image/icon/loading.svg
-    def __init__(self, filename: str, parent=None):
+    def __init__(self, filename: str, fill: str = None, stroke: str = None, stroke_width: str = None):
         super().__init__()
         self.filename = filename
         self._xml = None
@@ -50,6 +38,12 @@ class SVGRenderer(QSvgRenderer):
         self.rotated = False
 
         self._load_xml(filename)
+        if fill:
+            self.setFill(fill)
+        if stroke:
+            self.setStroke(stroke)
+        if stroke_width:
+            self.setStrokeWidth(stroke_width)
 
     def _load_xml(self, filename: str, sec=1):
         resource_data = QResource(filename)
@@ -107,23 +101,23 @@ class SVGRenderer(QSvgRenderer):
     def _set_xml_attribute(node: ET.Element, attribute_name, value):
         node.set(attribute_name, value)
 
-    def _set_svg_xml(self, xml, node_name, attribute_name, value):
+    def _set_xml(self, xml, node_name, attribute_name, value):
         root = ET.ElementTree(ET.fromstring(xml))
         svg_root = root.getroot()
         for node in svg_root.findall(f'.//{node_name}'):
             self._set_xml_attribute(node, attribute_name, value)
         return ET.tostring(svg_root, encoding='unicode')
 
-    def setSvgAttribute(self, node_name, attribute_name, value):
-        self._xml = self._set_svg_xml(self._xml, node_name, attribute_name, value)
-        self._rotate_animate_xml = self._set_svg_xml(self._rotate_animate_xml, node_name, attribute_name, value)
+    def setAttribute(self, node_name, attribute_name, value):
+        self._xml = self._set_xml(self._xml, node_name, attribute_name, value)
+        self._rotate_animate_xml = self._set_xml(self._rotate_animate_xml, node_name, attribute_name, value)
         self.setRotated(self.rotated)
 
-    def setSvgFill(self, value):
-        self.setSvgAttribute('path', 'fill', value)
+    def setFill(self, value):
+        self.setAttribute('path', 'fill', value)
 
-    def setSvgStroke(self, value):
-        self.setSvgAttribute('path', 'stroke', value)
+    def setStroke(self, value):
+        self.setAttribute('path', 'stroke', value)
 
-    def setSvgStrokeWidth(self, value):
-        self.setSvgAttribute('path', 'stroke-width', value)
+    def setStrokeWidth(self, value:int):
+        self.setAttribute('path', 'stroke-width', str(value))

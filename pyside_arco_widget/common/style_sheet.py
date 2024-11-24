@@ -85,7 +85,6 @@ class StyleSheetBase:
 
     def apply(self, widget: QWidget):
         """ 应用样式表到组件 """
-        print(self.path())
         setStyleSheet(widget, self)
 
 class StyleSheetFile(StyleSheetBase):
@@ -103,7 +102,8 @@ class ArcoStyleSheet(StyleSheetBase, Enum):
     """ Arco 样式表 """
 
     # 基础组件
-    BUTTON = "button"
+    Button = "button"
+    ButtonGroup = "button-group"
 
     def path(self):
         return f":/pysidearcowidget/qss/{self.value}.qss"
@@ -176,7 +176,7 @@ class DirtyStyleSheetWatcher(QObject):
         return super().eventFilter(obj, e)
 
 
-def getStyleSheetFromFile(file: Union[str, QResource]):
+def getStyleSheetFromFile(file: Union[str, QFile]):
     """ 从文件中获取样式表内容 """
     file = QFile(file)
     file.open(QFile.ReadOnly)
@@ -200,8 +200,6 @@ def setStyleSheet(widget: QWidget, source: Union[str, StyleSheetBase]):
 
     styleSheetManager.register(source, widget)
     qss = getStyleSheet(source)
-    print(source)
-    print(qss)
     widget.setStyleSheet(qss)
 
 
@@ -212,4 +210,5 @@ def addStyleSheet(widget: QWidget, source: Union[str, StyleSheetBase]):
 
     styleSheetManager.register(source, widget, False)
     qss = getStyleSheet(styleSheetManager.source(widget))
+    # print(qss)
     widget.setStyleSheet(qss)

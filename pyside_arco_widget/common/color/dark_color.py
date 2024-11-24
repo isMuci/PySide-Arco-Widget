@@ -214,5 +214,3 @@ class Text(ColorEnum):
     text_3 = (255, 255, 255, 127.5)
     text_4 = (255, 255, 255, 76.5)
 
-
-print(Text.text_1.color)
