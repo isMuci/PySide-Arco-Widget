@@ -5,17 +5,27 @@ from pyside_arco_widget.common.icon.svg import SVGRenderer, SvgEnum
 
 
 class Icon:
-    def __init__(self, renderer: SVGRenderer, spin: bool = False, repaint=None,  size: QSize = QSize(24, 24)):
+    def __init__(self, renderer: SVGRenderer, spin: bool = False, repaint=None, size: QSize = QSize(24, 24)):
         self.renderer = renderer
         self._size = size
         self.repaint = repaint
-        self.setSpin(spin)
+        self.spin = spin
 
-    def setSpin(self, spin: bool):
+    def isNull(self):
+        return self.renderer is None
+
+    @property
+    def spin(self):
+        return self.renderer.rotated
+
+    @spin.setter
+    def spin(self, spin: bool):
         self.renderer.setRotated(spin)
-        if self.repaint:
-            self.renderer.repaintNeeded.connect(lambda: self.repaint(self.pixmap))
-
+        if spin:
+            if self.repaint:
+                self.renderer.repaintNeeded.connect(lambda:self.repaint(self.pixmap))
+        else:
+            self.renderer.repaintNeeded.disconnect()
 
     @property
     def pixmap(self):

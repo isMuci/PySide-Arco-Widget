@@ -5,17 +5,10 @@ from PySide6.QtGui import QIcon, QFont, QPalette, QColor
 from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QLabel, QGridLayout, \
     QScrollArea
 
+from example.base_view import BaseView
 from pyside_arco_widget.common.font import setFont
 from pyside_arco_widget.common.icon.icon import ArcoIcon
 from pyside_arco_widget.component.general.button import Button, ButtonGroup
-
-
-class BaseView(QWidget):
-
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet("BaseView{background-color: rgb(255,255,255)}")
-        self.setContentsMargins(50, 50, 50, 50)
 
 
 class Basic(QWidget):
@@ -310,62 +303,28 @@ class Long(QWidget):
 
 
 class ButtonDemo(BaseView):
-    def __init__(self):
-        super().__init__()
-        self.layout = QVBoxLayout(self)
+    def __init__(self, title: str = None):
+        super().__init__(title)
 
-        self.label = QLabel('基本用法')
-        setFont(self.label, 20)
-        self.layout.addWidget(self.label)
-        self.layout.addWidget(Basic())
+        sections = [
+            ('基本用法', Basic()),
+            ('图标按钮', Icon()),
+            ('按钮形状', Shape()),
+            ('按钮尺寸', Size()),
+            ('按钮状态', Status()),
+            ('禁用按钮', Disabled()),
+            ('加载中按钮', Loading()),
+            ('组合按钮', Button_Group()),
+            ('长按钮', Long())
+        ]
 
-        self.label1 = QLabel('图标按钮')
-        setFont(self.label1, 20)
-        self.layout.addWidget(self.label1)
-        self.layout.addWidget(Icon())
-
-        self.label2 = QLabel('按钮形状')
-        setFont(self.label2, 20)
-        self.layout.addWidget(self.label2)
-        self.layout.addWidget(Shape())
-
-        self.label3 = QLabel('按钮尺寸')
-        setFont(self.label3, 20)
-        self.layout.addWidget(self.label3)
-        self.layout.addWidget(Size())
-
-        self.label3 = QLabel('按钮状态')
-        setFont(self.label3, 20)
-        self.layout.addWidget(self.label3)
-        self.layout.addWidget(Status())
-
-        self.label4 = QLabel('禁用按钮')
-        setFont(self.label4, 20)
-        self.layout.addWidget(self.label4)
-        self.layout.addWidget(Disabled())
-
-        self.label5 = QLabel('加载中按钮')
-        setFont(self.label5, 20)
-        self.layout.addWidget(self.label5)
-        self.layout.addWidget(Loading())
-
-        self.label6 = QLabel('组合按钮')
-        setFont(self.label6, 20)
-        self.layout.addWidget(self.label6)
-        self.layout.addWidget(Button_Group())
-
-        self.label7 = QLabel('长按钮')
-        setFont(self.label7, 20)
-        self.layout.addWidget(self.label7)
-        self.layout.addWidget(Long())
+        for title, widget in sections:
+            self.addSection(title, widget)
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    scroll = QScrollArea()
-    scroll.setWidgetResizable(True)
-    scroll.setWidget(ButtonDemo())
-    scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-    scroll.resize(1280, 720)
-    scroll.show()
+    demo = ButtonDemo('按钮 Button')
+    demo.resize(1280, 720)
+    demo.show()
     app.exec()

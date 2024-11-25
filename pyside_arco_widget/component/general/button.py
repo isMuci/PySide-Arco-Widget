@@ -8,7 +8,7 @@ from PySide6.QtWidgets import QPushButton, QWidget, QApplication, QGraphicsDropS
 
 from pyside_arco_widget.common.font import setFont
 from pyside_arco_widget.common.icon.icon import Icon, ArcoIcon
-from pyside_arco_widget.common.icon.svg import  SVGRenderer
+from pyside_arco_widget.common.icon.svg import SVGRenderer
 from pyside_arco_widget.common.style_sheet import ArcoStyleSheet, addStyleSheet
 
 style_base = """
@@ -359,81 +359,119 @@ class Button(QPushButton):
                  shape: str = 'square', size: str = 'default', status: str = None, disabled: bool = False,
                  loading: bool = False, long: bool = False, icon_right: bool = False, parent=None):
         super().__init__(parent)
-        self._init_loading()
-        # self.setStyleSheet(style_base + style[button_type])
+        self._text = text
+        self._button_type = None
+        self._icon = QIcon()
+        self._shape = None
+        self._size = None
+        self._status = None
+        self._loading = None
+        self._overlay = QWidget(self)
+        self._overlay.setObjectName('LoadingOverlay')
+        self._overlay.setVisible(False)
+        self._long = None
         ArcoStyleSheet.Button.apply(self)
         setFont(self)
-        self._text = text
-        self.setText(True if icon else False)
-        self.setButtonType(button_type)
-        self.setIconSize(QSize(icon_size[size], icon_size[size]))
-        self._icon = QIcon()
+        self._setText(True if icon else False)
+        self.buttonType = button_type
         if icon:
             if isinstance(icon, QIcon):
                 self._icon = icon
             elif isinstance(icon, SVGRenderer):
-                self._icon = SVGIcon(self, icon)
+                self._icon = Icon(icon)
             self.setIcon(self._icon)
-        self.setShape(shape)
-        self.setASize(size)
-        self.setStatus(status)
+        self.shape = shape
+        self.bsize = size
+        self.status = status
         self.setDisabled(disabled)
         if loading:
             self.setLoading(loading)
+        self.long = long
         if icon_right:
             self.setLayoutDirection(Qt.RightToLeft)
-        self.setLong(long)
 
-    def setButtonType(self, button_type: str):
-        self._button_type = button_type
-        self.setProperty('Type', button_type)
+    @property
+    def text(self):
+        return self._text
+
+    @text.setter
+    def text(self, text: str):
+        self._text = text
+        if isinstance(self._icon, Icon):
+            self._setText(self._icon.renderer is not None)
+        elif isinstance(self._icon, QIcon):
+            self._setText(self._icon.isNull())
+
+    def _setText(self, has_icon: bool):
+        if self._text:
+            self.setText(f"{' ' if has_icon else ''}{self._text}")
+        else:
+            self.setProperty('IconOnly', True)
 
     @property
     def buttonType(self):
         return self._button_type
 
-    def setShape(self, shape: str):
-        self._shape = shape
-        self.setProperty('Shape', shape)
-        self._loading_overlay.setProperty('Shape', shape)
+    @buttonType.setter
+    def buttonType(self, button_type: str):
+        self._button_type = button_type
+        self.setProperty('Type', button_type)
 
     @property
     def shape(self):
         return self._shape
 
-    def setASize(self, size: str):
-        self._size = size
-        self.setProperty('Size', size)
-        self._loading_overlay.setProperty('Size', size)
+    @shape.setter
+    def shape(self, shape: str):
+        self._shape = shape
+        self.setProperty('Shape', shape)
+        self._overlay.setProperty('Shape', shape)
 
     @property
-    def aSize(self):
+    def bsize(self):
         return self._size
 
-    def setStatus(self, status: str):
-        self._status = status
-        self.setProperty('Status', status)
+    @bsize.setter
+    def bsize(self, size: str):
+        self._size = size
+        self.setProperty('Size', size)
+        self._overlay.setProperty('Size', size)
 
     @property
     def status(self):
         return self._status
 
-    def setLong(self, long: bool):
+    @status.setter
+    def status(self, status: str):
+        self._status = status
+        self.setProperty('Status', status)
+
+    @property
+    def long(self):
+        return self._long
+
+    @long.setter
+    def long(self, long: bool):
         self._long = long
         if long:
             self.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         else:
             self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
 
-    @property
-    def long(self):
-        return self._long
+    def setLoading(self, loading: bool):
+        self.setProperty('Loading', loading)
+        self._overlay.setVisible(loading)
+        super().setDisabled(loading)
+        if loading:
+            self._loading = Icon(ArcoIcon.Loading.renderer, True, self.setIcon, self.iconSize())
+            self.setIcon(self._loading)
+            self._setText(True)
+        else:
+            self._loading.spin=False
+            self._loading = None
+            self.setIcon(self._icon)
 
-    def _init_loading(self):
-        self._loading = None
-        self._loading_overlay = QWidget(self)
-        self._loading_overlay.setObjectName('LoadingOverlay')
-        self._loading_overlay.setVisible(False)
+            self._setText(not self._icon.isNull())
 
     def setIcon(self, icon: [QIcon | Icon | QPixmap]):
         if isinstance(icon, Icon):
@@ -443,7 +481,7 @@ class Button(QPushButton):
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
-        self._loading_overlay.setGeometry(self.rect())
+        self._overlay.setGeometry(self.rect())
 
     def setDisabled(self, disabled: bool):
         self.setProperty('Disabled', disabled)
@@ -451,27 +489,6 @@ class Button(QPushButton):
 
     def setEnabled(self, enabled: bool):
         self.setDisabled(not enabled)
-
-    def setText(self, has_icon: bool = True):
-        if self._text:
-            super().setText(f"{' ' if has_icon else ''}{self._text}")
-        else:
-            self.setProperty('IconOnly', True)
-
-    def setLoading(self, loading: bool):
-        self.setProperty('Loading', loading)
-        self._loading_overlay.setVisible(loading)
-        super().setDisabled(loading)
-        if loading:
-            if not self._loading:
-                self._loading = Icon(ArcoIcon.Loading.renderer, True, self.setIcon, self.iconSize())
-            self.setIcon(self._loading)
-            self.setText(True)
-        else:
-            self._loading = None
-            self.setIcon(self._icon)
-            self.setText(not self._icon.isNull())
-
 
 
 class ButtonGroup(QWidget):
@@ -482,12 +499,12 @@ class ButtonGroup(QWidget):
         self.layout.setContentsMargins(10, 10, 10, 10)
         self.layout.setSpacing(0)
         if buttons:
-            self.add_buttons(buttons)
+            self.addButtons(buttons)
 
-    def add_buttons(self, buttons: list[Button]):
+    def addButtons(self, buttons: list[Button]):
         """添加一组按钮到ButtonGroup"""
         for i, button in enumerate(buttons):
-            self.add_button(button)
+            self.addButton(button)
             button.setProperty('Group', True)
 
             if i == 0:  # 第一个按钮
@@ -499,7 +516,7 @@ class ButtonGroup(QWidget):
             else:  # 中间的按钮
                 addStyleSheet(button, ArcoStyleSheet.ButtonGroup)
 
-    def add_button(self, button: Button):
+    def addButton(self, button: Button):
         """添加单个按钮到ButtonGroup"""
         # button.setInButtonGroup(True)
         self.layout.addWidget(button)

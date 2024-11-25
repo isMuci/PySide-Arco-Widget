@@ -5,17 +5,10 @@ from PySide6.QtGui import QIcon, QFont, QPalette, QColor
 from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QLabel, QGridLayout, \
     QScrollArea
 
+from example.base_view import BaseView
 from pyside_arco_widget.common.font import setFont
 from pyside_arco_widget.common.icon.icon import ArcoIcon, Icon
 from pyside_arco_widget.component.general.button import Button, ButtonGroup
-
-
-class BaseView(QWidget):
-
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet("BaseView{background-color: rgb(255,255,255)}")
-        self.setContentsMargins(50, 50, 50, 50)
 
 
 class Basic(QWidget):
@@ -47,29 +40,24 @@ class Spin(QWidget):
         self.label.setPixmap(self.icon.pixmap)
         self.layout.addWidget(self.label)
 
-class ButtonDemo(BaseView):
-    def __init__(self):
-        super().__init__()
-        self.layout = QVBoxLayout(self)
-        self.layout.setAlignment(Qt.AlignTop)
 
-        self.label = QLabel('基础用法')
-        setFont(self.label, 20)
-        self.layout.addWidget(self.label)
-        self.layout.addWidget(Basic())
+class IconDemo(BaseView):
 
-        self.label1 = QLabel('加载中')
-        setFont(self.label1, 20)
-        self.layout.addWidget(self.label1)
-        self.layout.addWidget(Spin())
+    def __init__(self, title: str = None):
+        super().__init__(title)
+
+        sections = [
+            ('基本用法', Basic()),
+            ('加载中', Spin())
+        ]
+
+        for title, widget in sections:
+            self.addSection(title, widget)
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    scroll = QScrollArea()
-    scroll.setWidgetResizable(True)
-    scroll.setWidget(ButtonDemo())
-    scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-    scroll.resize(1280, 720)
-    scroll.show()
+    demo = IconDemo('图标 Icon')
+    demo.resize(1280, 720)
+    demo.show()
     app.exec()
