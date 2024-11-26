@@ -1,19 +1,19 @@
 Button{
     padding: 0 15px;
     height: 32px;
-    border-radius: 2px;
     font-size: 14px;
+    border-radius: --border-radius-small;
     outline: none;
-    background-color: rgb(242,243,245);
-    color: rgb(78,89,105);
+    background-color: --color-secondary;
+    color: --color-text-2;
     border: 0;
     qproperty-iconSize: 14px;
 }
 Button:hover{
-    background-color: rgb(229,230,235);
+    background-color: --color-secondary-hover;
 }
 Button:pressed{
-    background-color: rgb(201,205,212);
+    background-color: --color-secondary-active;
 }
 Button[IconOnly=true]{
     width: 32px;
@@ -29,6 +29,7 @@ Button[Shape=round], #LoadingOverlay[Shape=round]{
     border-radius: 16px;
 }
 Button[Size=mini], #LoadingOverlay[Size=mini]{
+    padding: 0 11px;
     font-size: 12px;
     height: 24px;
 }
@@ -41,267 +42,267 @@ Button[Size=large], #LoadingOverlay[Size=large]{
 }
 #LoadingOverlay {
     background: rgba(255, 255, 255, 0.4);
-    border-radius: 2px;
+    border-radius: --border-radius-small;
 }
 Button[Type=primary]{
     background-color: rgb(--primary-6);
-    color: #ffffff;
+    color: --color-white;
 }
 Button[Type=primary][Disabled=true]{
-    background-color: rgb(148,191,255);
+    background-color: --color-primary-light-3;
 }
 Button[Type=primary]:hover{
-    background-color: rgb(64,128,255);
+    background-color: rgb(--primary-5);
 }
 Button[Type=primary]:pressed{
-    background-color: rgb(14,66,210);
+    background-color: rgb(--primary-7);
 }
 Button[Type=primary][Status=warning]{
-    background-color: rgb(255,150,38);
+    background-color: rgb(--warning-6);
 }
 Button[Type=primary][Status=warning][Disabled=true]{
-    background-color: rgb(255,207,139);
+    background-color: --color-warning-light-3;
 }
 Button[Type=primary][Status=warning]:hover{
-    background-color: rgb(255,154,46);
+    background-color: rgb(--warning-5);
 }
 Button[Type=primary][Status=warning]:pressed{
-    background-color: rgb(210,95,0);
+    background-color: rgb(--warning-7);
 }
 Button[Type=primary][Status=danger]{
-    background-color: rgb(245,63,63);
+    background-color: rgb(--danger-6);
 }
 Button[Type=primary][Status=danger][Disabled=true]{
-    background-color: rgb(251,172,163);
+    background-color: --color-danger-light-3;
 }
 Button[Type=primary][Status=danger]:hover{
-    background-color: rgb(247,101,96);
+    background-color: rgb(--danger-5);
 }
 Button[Type=primary][Status=danger]:pressed{
-    background-color: rgb(203,39,45);
+    background-color: rgb(--danger-7);
 }
 Button[Type=primary][Status=success]{
-    background-color: rgb(0,180,42);
+    background-color: rgb(--success-6);
 }
 Button[Type=primary][Status=success][Disabled=true]{
-    background-color: rgb(123,225,136);
+    background-color: --color-success-light-3;
 }
 Button[Type=primary][Status=success]:hover{
-    background-color: rgb(35,195,67);
+    background-color: rgb(--success-5);
 }
 Button[Type=primary][Status=success]:pressed{
-    background-color: rgb(0,154,41);
+    background-color: rgb(--success-7);
 }
 Button[Type=secondary][Disabled=true]{
-    background-color: rgb(247,248,250);
-    color: rgb(201,205,212);
+    background-color: --color-secondary-disabled;
+    color: --color-text-4;
 }
 Button[Type=secondary]:hover{
-    background-color: rgb(229,230,235);
+    background-color: --color-secondary-hover;
 }
 Button[Type=secondary]:pressed{
-    background-color: rgb(201,205,212);
+    background-color: --color-secondary-active;
 }
 Button[Type=secondary][Status=warning]{
-    background-color: rgb(255,247,232);
-    color: rgb(255,125,0);
+    background-color: --color-warning-light-1;
+    color: rgb(--warning-6);
 }
 Button[Type=secondary][Status=warning][Disabled=true]{
-    color: rgb(255,207,139);
+    color: --color-warning-light-3;
 }
 Button[Type=secondary][Status=warning]:hover{
-    background-color: rgb(255,228,186);
+    background-color: --color-warning-light-2;
 }
 Button[Type=secondary][Status=warning]:pressed{
-    background-color: rgb(255,207,139);
+    background-color: --color-warning-light-3;
 }
 Button[Type=secondary][Status=danger]{
-    background-color: rgb(255,236,232);
-    color: rgb(245,63,63);
+    background-color: --color-danger-light-1;
+    color: rgb(--danger-6);
 }
 Button[Type=secondary][Status=danger][Disabled=true]{
-    color: rgb(251,172,163);
+    color: --color-danger-light-3;
 }
 Button[Type=secondary][Status=danger]:hover{
-    background-color: rgb(253,205,197);
+    background-color: --color-danger-light-2;
 }
 Button[Type=secondary][Status=danger]:pressed{
-    background-color: rgb(251,172,163);
+    background-color: --color-danger-light-3;
 }
 Button[Type=secondary][Status=success]{
-    background-color: rgb(232,255,234);
-    color: rgb(0,180,42);
+    background-color: --color-success-light-1;
+    color: rgb(--success-6);
 }
 Button[Type=secondary][Status=success][Disabled=true]{
-    color: rgb(123,225,136);
+    color: --color-success-light-3;
 }
 Button[Type=secondary][Status=success]:hover{
-    background-color: rgb(175,240,181);
+    background-color: --color-success-light-2;
 }
 Button[Type=secondary][Status=success]:pressed{
-    background-color: rgb(123,225,136);
+    background-color: --color-success-light-3;
 }
 Button[Type=dashed] {
-    border: 1px dashed rgb(229,230,235);
+    border: 1px dashed --color-neutral-3;
 }
 Button[Type=dashed][Disabled=true] {
-    color: rgb(201,205,212);
+    color: --color-text-4;
 }
 Button[Type=dashed]:hover {
-    background-color: rgb(229,230,235);
-    border-color: rgb(201,205,212);
+    border-color: --color-neutral-4;
+    background-color: --color-fill-3;
 }
 Button[Type=dashed]:pressed {
-    background-color: rgb(201,205,212);
-    border-color: rgb(169,174,184);
+    border-color: --color-neutral-5;
+    background-color: --color-fill-4;
 }
 Button[Type=dashed][Status=warning] {
-    background-color: rgb(255,247,232);
-    color: rgb(255,125,0);
-    border-color: rgb(255,228,186);
+    background-color: --color-warning-light-1;
+    color: rgb(--warning-6);
+    border-color: --color-warning-light-2;
 }
 Button[Type=dashed][Status=warning][Disabled=true] {
-    color: rgb(255,207,139);
+    color: --color-warning-light-3;
 }
 Button[Type=dashed][Status=warning]:hover {
-    background-color: rgb(255,228,186);
-    border-color: rgb(255,207,139);
+    background-color: --color-warning-light-2;
+    border-color: --color-warning-light-3;
 }
 Button[Type=dashed][Status=warning]:pressed {
-    background-color: rgb(255,207,139);
-    border-color: rgb(255,182,93);
+    background-color: --color-warning-light-3;
+    border-color: --color-warning-light-4;
 }
 Button[Type=dashed][Status=danger] {
-    background-color: rgb(255,236,232);
-    color: rgb(245,63,63);
-    border-color: rgb(253,205,197);
+    background-color: --color-danger-light-1;
+    color: rgb(--danger-6);
+    border-color: --color-danger-light-2;
 }
 Button[Type=dashed][Status=danger][Disabled=true] {
-    color: rgb(251,172,163);
+    color: --color-danger-light-3;
 }
 Button[Type=dashed][Status=danger]:hover {
-    background-color: rgb(253,205,197);
-    border-color: rgb(251,172,163);
+    background-color: --color-danger-light-2;
+    border-color: --color-danger-light-3;
 }
 Button[Type=dashed][Status=danger]:pressed {
-    background-color: rgb(251,172,163);
-    border-color: rgb(249,137,129);
+    background-color: --color-danger-light-3;
+    border-color: --color-danger-light-4;
 }
 Button[Type=dashed][Status=success] {
-    background-color: rgb(232,255,234);
-    color: rgb(0,180,42);
-    border-color: rgb(175,240,181);
+    background-color: --color-success-light-1;
+    color: rgb(--success-6);
+    border-color: --color-success-light-2;
 }
 Button[Type=dashed][Status=success][Disabled=true] {
-    color: rgb(123,225,136);
+    color: --color-success-light-3;
 }
 Button[Type=dashed][Status=success]:hover {
-    background-color: rgb(175,240,181);
-    border-color: rgb(123,225,136);
+    background-color: --color-success-light-2;
+    border-color: --color-success-light-3;
 }
 Button[Type=dashed][Status=success]:pressed {
-    background-color: rgb(123,225,136);
-    border-color: rgb(76,210,99);
+    background-color: --color-success-light-3;
+    border-color: --color-success-light-4;
 }
 Button[Type=outline]{
     background-color: transparent;
-    color: rgb(22,93,255);
-    border: 1px solid rgb(22,93,255);
+    color: rgb(--primary-6);
+    border: 1px solid rgb(--primary-6);
 }
 Button[Type=outline][Disabled=true]{
-    color: rgb(148,191,255);
-    border: 1px solid rgb(148,191,255);
+    color: --color-primary-light-3;
+    border: 1px solid --color-primary-light-3;
 }
 Button[Type=outline]:hover{
-    color: rgb(64,128,255);
-    border-color: rgb(64,128,255);
+    color: rgb(--primary-5);
+    border-color: rgb(--primary-5);
     background-color: transparent;
 }
 Button[Type=outline]:pressed{
-    color: rgb(14,66,210);
-    border-color: rgb(14,66,210);
+    color: rgb(--primary-7);
+    border-color: rgb(--primary-7);
     background-color: transparent;
 }
 Button[Type=outline][Status=warning]{
-    color: rgb(255,125,0);
-    border-color: rgb(255,125,0);
+    color: rgb(--warning-6);
+    border-color: rgb(--warning-6);
 }
 Button[Type=outline][Status=warning][Disabled=true]{
-    color: rgb(255,207,139);
-    border-color: rgb(255,207,139);
+    color: --color-warning-light-3;
+    border-color: --color-warning-light-3;
 }
 Button[Type=outline][Status=warning]:hover{
-    color: rgb(255,154,46);
-    border-color: rgb(255,154,46);
+    color: rgb(--warning-5);
+    border-color: rgb(--warning-5);
     background-color: transparent;
 }
 Button[Type=outline][Status=warning]:pressed{
-    color: rgb(210,95,0);
-    border-color: rgb(210,95,0);
+    color: rgb(--warning-7);
+    border-color: rgb(--warning-7);
 }
 Button[Type=outline][Status=danger]{
-    color: rgb(245,63,63);
-    border-color: rgb(245,63,63);
+    color: rgb(--danger-6);
+    border-color: rgb(--danger-6);
 }
 Button[Type=outline][Status=danger][Disabled=true]{
-    color: rgb(251,172,163);
-    border-color: rgb(251,172,163);
+    color: --color-danger-light-3;
+    border-color: --color-danger-light-3;
 }
 Button[Type=outline][Status=danger]:hover{
-    color: rgb(247,101,96);
-    border-color: rgb(247,101,96);
+    color: rgb(--danger-5);
+    border-color: rgb(--danger-5);
     background-color: transparent;
 }
 Button[Type=outline][Status=danger]:pressed{
-    color: rgb(203,39,45);
-    border-color: rgb(203,39,45);
+    color: rgb(--danger-7);
+    border-color: rgb(--danger-7);
 }
 Button[Type=outline][Status=success]{
-    color: rgb(0,180,42);
-    border-color: rgb(0,180,42);
+    color: rgb(--success-6);
+    border-color: rgb(--success-6);
 }
 Button[Type=outline][Status=success][Disabled=true]{
-    color: rgb(123,225,136);
-    border-color: rgb(123,225,136);
+    color: --color-success-light-3;
+    border-color: --color-success-light-3;
 }
 Button[Type=outline][Status=success]:hover{
-    color: rgb(35,195,67);
-    border-color: rgb(35,195,67);
+    color: rgb(--success-5);
+    border-color: rgb(--success-5);
     background-color: transparent;
 }
 Button[Type=outline][Status=success]:pressed{
-    color: rgb(0,154,41);
-    border-color: rgb(0,154,41);
+    color: rgb(--success-7);
+    border-color: rgb(--success-7);
 }
 Button[Type=text]{
     background-color: transparent;
-    color: rgb(22,93,255);
+    color: rgb(--primary-6);
     border: 1px solid transparent;
 }
 Button[Type=text][Disabled=true]{
-    color: rgb(148,191,255);
+    color: --color-primary-light-3;
 }
 Button[Type=text]:hover{
-    background-color: rgb(242,243,245);
+    background-color: --color-fill-2;
 }
 Button[Type=text]:pressed{
-    background-color: rgb(229,230,235);
+    background-color: --color-fill-3;
 }
 Button[Type=text][Status=warning]{
-    color: rgb(255,125,0);
+    color: rgb(--warning-6);
 }
 Button[Type=text][Status=warning][Disabled=true]{
-    color: rgb(255,207,139);
+    color: --color-warning-light-3;
 }
 Button[Type=text][Status=danger]{
-    color: rgb(245,63,63);
+    color: rgb(--danger-6);
 }
 Button[Type=text][Status=danger][Disabled=true]{
-    color: rgb(251,172,163);
+    color: --color-danger-light-3;
 }
 Button[Type=text][Status=success]{
-    color: rgb(0,180,42);
+    color: rgb(--success-6);
 }
 Button[Type=text][Status=success][Disabled=true]{
-    color: rgb(123,225,136);
+    color: --color-success-light-3;
 }

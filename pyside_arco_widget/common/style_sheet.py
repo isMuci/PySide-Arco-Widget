@@ -68,7 +68,7 @@ styleSheetManager = StyleSheetManager()
 
 from string import Template
 from typing import Dict, Any
-from .token_manager import theme_token_manager, var_token_manager
+from .token_manager import token_manager
 
 
 class QssTemplate(Template):
@@ -83,11 +83,7 @@ class QssTemplate(Template):
 
 
 def apply_style_tokens(qss: str) -> str:
-    qss = QssTemplate.apply_token(qss, theme_token_manager.mapping)
-    print(theme_token_manager.mapping)
-    qss = QssTemplate.apply_token(qss, var_token_manager.mapping)
-    print(var_token_manager.mapping)
-    return qss
+    return QssTemplate.apply_token(qss, token_manager.mapping)
 
 
 class StyleSheetBase:

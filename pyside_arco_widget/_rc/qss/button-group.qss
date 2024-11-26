@@ -6,26 +6,26 @@ Button[Group=true][Shape=round] {
     padding: 0 8px;
 }
 Button[Group=true][Position=first] {
-    border-top-left-radius: 2px;
-    border-bottom-left-radius: 2px;
+    border-top-left-radius: --border-radius-small;
+    border-bottom-left-radius: --border-radius-small;
 }
 Button[Group=true][Position=first][Shape=round] {
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
 }
 Button[Group=true][Position=last] {
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
+    border-top-right-radius: --border-radius-small;
+    border-bottom-right-radius: --border-radius-small;
 }
 Button[Group=true][Position=last][Shape=round] {
     border-top-right-radius: 16px;
     border-bottom-right-radius: 16px;
 }
 Button[Group=true][Type=primary] {
-    border-right: 1px solid rgb(64,128,255);
+    border-right: 1px solid rgb(--primary-5);
 }
 Button[Group=true][Type=secondary] {
-    border-right: 1px solid rgb(229,230,235);
+    border-right: 1px solid --color-secondary-hover;
 }
 Button[Group=true][Position=last] {
     border-right: 0;
