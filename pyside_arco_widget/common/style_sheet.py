@@ -5,6 +5,7 @@ import weakref
 from PySide6.QtCore import QObject, QEvent, QFile, QResource, QTextStream
 from PySide6.QtWidgets import QWidget
 
+from .util import file
 
 
 class StyleSheetManager(QObject):
@@ -65,11 +66,28 @@ class StyleSheetManager(QObject):
 # 全局样式管理器实例
 styleSheetManager = StyleSheetManager()
 
+from string import Template
+from typing import Dict, Any
+from .token_manager import theme_token_manager, var_token_manager
+
 
 class QssTemplate(Template):
-    """ 样式表模板 """
+    """样式模板"""
     delimiter = '--'
+    idpattern = r'[_a-z0-9\-]+'
 
+    @classmethod
+    def apply_token(cls, qss: str, mapping: Dict[str, Any]) -> str:
+        template = cls(qss)
+        return template.substitute(mapping)
+
+
+def apply_style_tokens(qss: str) -> str:
+    qss = QssTemplate.apply_token(qss, theme_token_manager.mapping)
+    print(theme_token_manager.mapping)
+    qss = QssTemplate.apply_token(qss, var_token_manager.mapping)
+    print(var_token_manager.mapping)
+    return qss
 
 
 class StyleSheetBase:
@@ -87,6 +105,7 @@ class StyleSheetBase:
         """ 应用样式表到组件 """
         setStyleSheet(widget, self)
 
+
 class StyleSheetFile(StyleSheetBase):
     """ 样式表文件类 """
 
@@ -97,6 +116,7 @@ class StyleSheetFile(StyleSheetBase):
     def path(self):
         """ 获取样式表路径 """
         return self.filePath
+
 
 class ArcoStyleSheet(StyleSheetBase, Enum):
     """ Arco 样式表 """
@@ -147,7 +167,8 @@ class StyleSheet(StyleSheetBase):
 
     def content(self):
         return self.widget.property(self.STYLE_SHEET_KEY) or ''
-    
+
+
 class StyleSheetWatcher(QObject):
     """ 自定义样式表监听器 """
 
@@ -176,14 +197,11 @@ class DirtyStyleSheetWatcher(QObject):
         return super().eventFilter(obj, e)
 
 
-def getStyleSheetFromFile(file: Union[str, QFile]):
-    """ 从文件中获取样式表内容 """
-    file = QFile(file)
-    file.open(QFile.ReadOnly)
-    stream = QTextStream(file)
-    stylesheet = stream.readAll()
-    file.close()
-    return stylesheet
+def getStyleSheetFromFile(path: Union[str, QFile]):
+    qss = file.read(path)
+    qss = apply_style_tokens(qss)
+    print(qss)
+    return qss
 
 
 def getStyleSheet(source: Union[str, StyleSheetBase]):

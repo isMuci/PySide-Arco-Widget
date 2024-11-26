@@ -2,5 +2,10 @@ from enum import Enum
 
 
 class Theme(Enum):
-    LIGHT = "LIGHT"
-    DARK = "DARK"
+    LIGHT = "Light"
+    DARK = "Dark"
+    AUTO = "Auto"
+
+
+class Config:
+    theme = Theme.LIGHT

@@ -269,5 +269,11 @@
         <file>qss/button.qss</file>
         <file>qss/button-group.qss</file>
 
+        <file>styletoken/base.json</file>
+        <file>styletoken/dark.json</file>
+
+        <file>styletoken/var.json</file>
+
+
     </qresource>
 </RCC>
