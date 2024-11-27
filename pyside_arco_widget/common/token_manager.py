@@ -82,7 +82,4 @@ class TokenManager:
 
 
 
-# 全局令牌管理器实例
 token_manager = TokenManager(':/pysidearcowidget/styletoken/token.json')
-
-print(token_manager.mapping)

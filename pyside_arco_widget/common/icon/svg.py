@@ -37,6 +37,8 @@ class SVGRenderer(QSvgRenderer):
         self._rotate_animate_xml = None
         self.rotated = False
 
+        # print(self.filename)
+
         self._load_xml(filename)
         if fill:
             self.setFill(fill)
@@ -113,10 +115,10 @@ class SVGRenderer(QSvgRenderer):
         self._rotate_animate_xml = self._set_xml(self._rotate_animate_xml, node_name, attribute_name, value)
         self.setRotated(self.rotated)
 
-    def setFill(self, value):
+    def setFill(self, value:str):
         self.setAttribute('path', 'fill', value)
 
-    def setStroke(self, value):
+    def setStroke(self, value:str):
         self.setAttribute('path', 'stroke', value)
 
     def setStrokeWidth(self, value:int):

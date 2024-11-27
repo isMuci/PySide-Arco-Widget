@@ -196,7 +196,7 @@ class DirtyStyleSheetWatcher(QObject):
 def getStyleSheetFromFile(path: Union[str, QFile]):
     qss = file.read(path)
     qss = apply_style_tokens(qss)
-    print(qss)
+    # print(qss)
     return qss
 
 
