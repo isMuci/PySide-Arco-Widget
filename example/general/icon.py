@@ -19,13 +19,13 @@ class Basic(QWidget):
 
         self.icon = Icon(ArcoIcon.Star.renderer)
         self.label = QLabel()
-        self.label.setPixmap(self.icon.pixmap)
+        self.label.setPixmap(self.icon.icon)
         self.layout.addWidget(self.label)
 
         self.icon1 = Icon(ArcoIcon.Star.renderer)
         self.icon1.renderer.setStroke('#ffcd00')
         self.label1 = QLabel()
-        self.label1.setPixmap(self.icon1.pixmap)
+        self.label1.setPixmap(self.icon1.icon)
         self.layout.addWidget(self.label1)
 
 
@@ -37,7 +37,7 @@ class Spin(QWidget):
 
         self.label = QLabel()
         self.icon = Icon(ArcoIcon.Sync.renderer, True, self.label.setPixmap, QSize(40, 40))
-        self.label.setPixmap(self.icon.pixmap)
+        self.label.setPixmap(self.icon.icon)
         self.layout.addWidget(self.label)
 
 

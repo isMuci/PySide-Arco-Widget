@@ -1,5 +1,5 @@
 from PySide6.QtCore import QSize
-from PySide6.QtGui import QPixmap, Qt, QPainter
+from PySide6.QtGui import QPixmap, Qt, QPainter, QIcon
 
 from pyside_arco_widget.common.icon.svg import SVGRenderer, SvgEnum
 
@@ -23,18 +23,22 @@ class Icon:
         self.renderer.setRotated(spin)
         if spin:
             if self.repaint:
-                self.renderer.repaintNeeded.connect(lambda:self.repaint(self.pixmap))
+                self.renderer.repaintNeeded.connect(lambda: self.repaint(self.icon))
         else:
             self.renderer.repaintNeeded.disconnect()
 
     @property
-    def pixmap(self):
+    def icon(self):
         pixmap = QPixmap(self._size)
         pixmap.fill(Qt.transparent)
         painter = QPainter(pixmap)
         self.renderer.render(painter)
         painter.end()
-        return pixmap.scaled(self._size)
+        pixmap = pixmap.scaled(self._size)
+        icon = QIcon()
+        icon.addPixmap(pixmap, QIcon.Mode.Normal)
+        icon.addPixmap(pixmap, QIcon.Mode.Disabled)
+        return icon
 
 
 class ArcoIcon(SvgEnum):

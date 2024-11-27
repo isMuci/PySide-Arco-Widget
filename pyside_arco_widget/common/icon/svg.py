@@ -98,6 +98,7 @@ class SVGRenderer(QSvgRenderer):
             self.load(QByteArray(self._rotate_animate_xml.encode('utf-8')))
         else:
             self.load(QByteArray(self._xml.encode('utf-8')))
+            # print(self._xml)
 
     @staticmethod
     def _set_xml_attribute(node: ET.Element, attribute_name, value):

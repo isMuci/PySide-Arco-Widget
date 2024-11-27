@@ -120,6 +120,7 @@ class ArcoStyleSheet(StyleSheetBase, Enum):
     # 基础组件
     Button = "button"
     ButtonGroup = "button-group"
+    Link = "link"
 
     def path(self):
         return f":/pysidearcowidget/qss/{self.value}.qss"

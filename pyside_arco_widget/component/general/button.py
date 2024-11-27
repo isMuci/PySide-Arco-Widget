@@ -139,7 +139,7 @@ class Button(QPushButton):
             stroke = token_manager.mapping[key]
             # print(f'{key} : {stroke}')
             icon.renderer.setStroke(stroke)
-            super().setIcon(icon.pixmap)
+            super().setIcon(icon.icon)
         else:
             super().setIcon(icon)
 

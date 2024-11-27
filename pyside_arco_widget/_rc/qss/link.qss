@@ -1,0 +1,37 @@
+Link {
+    text-align: left;
+    color: rgb(--link-6);
+    font-size: 14px;
+    padding: 1px 4px;
+    border-radius: --border-radius-small;
+    background-color: transparent;
+    border: 0;
+    qproperty-iconSize: 12px;
+}
+Link[Hoverable=true]:hover {
+    background-color: --color-fill-2;
+}
+Link[Hoverable=true]:pressed {
+    background-color: --color-fill-3;
+}
+Link:disabled {
+    color: --color-link-light-3;
+}
+Link[Status=error] {
+    color: rgb(--danger-6);
+}
+Link[Status=error]:disabled {
+    color: --color-danger-light-3;
+}
+Link[Status=success] {
+    color: rgb(--success-6);
+}
+Link[Status=success]:disabled {
+    color: --color-success-light-3;
+}
+Link[Status=warning] {
+    color: rgb(--warning-6);
+}
+Link[Status=warning]:disabled {
+    color: --color-warning-light-3;
+}
